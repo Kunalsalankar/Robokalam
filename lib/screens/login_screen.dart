@@ -9,24 +9,20 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
-  // Form key and controllers
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
-  // Animation controller
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
-  // Loading state
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Set up animations
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 1200),
@@ -58,14 +54,12 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     super.dispose();
   }
 
-  // Handle login process
   Future<void> _login() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
-      // Simulate network delay
       await Future.delayed(Duration(milliseconds: 1500));
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -74,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       await prefs.setString('userName', _nameController.text);
       await prefs.setString('userEmail', _emailController.text);
 
-      // Navigate to home screen after successful login
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => HomeScreen(userName: _nameController.text),
@@ -85,12 +78,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions to make UI responsive
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      // Use a decorative background
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -115,7 +106,6 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // App logo or icon
                         Container(
                           width: 100,
                           height: 100,
