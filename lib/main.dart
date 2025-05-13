@@ -5,7 +5,6 @@ import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
-  // Ensure Flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
   // Check login status
@@ -13,7 +12,6 @@ void main() async {
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
   String userName = prefs.getString('userName') ?? '';
 
-  // Run the app with the initial route information
   runApp(MyApp(isLoggedIn: isLoggedIn, userName: userName));
 }
 
@@ -33,12 +31,10 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Roboto',
       ),
-      // This is the key change: we decide the initial screen based on login status
-      // For first launch or not logged in users, show splash screen
-      // For logged in users, go directly to home screen
+
       home: isLoggedIn
-          ? HomeScreen(userName: userName)  // Skip splash screen if logged in
-          : SplashScreen(),  // Show splash screen only for first launch/not logged in
+          ? HomeScreen(userName: userName)
+          : SplashScreen(),
     );
   }
 }
